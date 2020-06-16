@@ -45,6 +45,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private static EditText weather_text_view;
     private static EditText mood_text_view;
     private static EditText key1_text_view;
+    private static EditText key2_text_view;
+    private static EditText key3_text_view;
     private static TextView title_text_view;
     private static TextView date_text_view;
     private static EditText description_text_view;
@@ -68,9 +70,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             getLoaderManager().initLoader(LOADER_ID,null,this);
         }
 
+        title_text_view=(TextView) findViewById(R.id.title_note);
         weather_text_view=(EditText) findViewById(R.id.weather_note);
         mood_text_view=(EditText) findViewById(R.id.mood_note);
         key1_text_view=(EditText) findViewById(R.id.key_note_1);
+        key2_text_view=(EditText) findViewById(R.id.key_note_2);
+        key3_text_view=(EditText) findViewById(R.id.key_note_3);
         date_text_view= (TextView)findViewById(R.id.date_detail_activity);
         description_text_view=(EditText)findViewById(R.id.description_detail_Activity);
         date_range =(Button)findViewById(R.id.date_selector);
@@ -102,6 +107,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         date_range.setOnTouchListener(mTouchListener);
 
         weather_text_view.setOnTouchListener(mTouchListener);
+        mood_text_view.setOnTouchListener(mTouchListener);
+        key1_text_view.setOnTouchListener(mTouchListener);
+        key2_text_view.setOnTouchListener(mTouchListener);
+        key3_text_view.setOnTouchListener(mTouchListener);
+
 
         description_text_view.setOnTouchListener(mTouchListener);
 
@@ -116,7 +126,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                     if(resultCode==RESULT_OK&& data!=null){
                         ArrayList<String> text = data
                                 .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                        weather_text_view.setText(text.get(0));
+                        title_text_view.setText(text.get(0));
                     }
                     break;
                 case RESULT_DESCRIPTION_TEXT:
@@ -196,15 +206,15 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     // 다이어리 삭제 및 취소 메시지, 처리
     private void showDeleteConfirmationDialog(){
         AlertDialog.Builder builder= new  AlertDialog.Builder(this);
-        builder.setMessage("Delete this diary?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener(){
+        builder.setMessage("삭제하시겠습니까?");
+        builder.setPositiveButton("삭제", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteDiary();
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(dialog!=null){
@@ -232,7 +242,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 finish();
                 return true;
             default:
-                return  super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -240,10 +250,25 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private void saveDiary(Uri saveUri) {
         ContentValues values = new ContentValues();
 
-        String title= weather_text_view.getText().toString();
-        title = convertToEmoji(title);
+        String weather= weather_text_view.getText().toString();
+        String mood= mood_text_view.getText().toString();
+        String keyword1= key1_text_view.getText().toString();
+        String keyword2= key2_text_view.getText().toString();
+        String keyword3= key3_text_view.getText().toString();
+        String merged = weather + "," + mood + "," + keyword1 + "," + keyword2 + "," + keyword3;
+        System.out.println("***************************");
+        String title = convertToEmoji(merged);
+        System.out.println(title);
+
+//        weather = convertToEmoji(weather);
+//        mood = convertToEmoji(mood);
+//        keyword1 = convertToEmoji(keyword1);
+//        keyword2 = convertToEmoji(keyword2);
+//        keyword3 = convertToEmoji(keyword3);
+
         String date = date_text_view.getText().toString();
         String description = description_text_view.getText().toString();
+
 
         values.put(DiaryContract.DiaryEntry.COLUMN_TITLE,title);
         values.put(DiaryContract.DiaryEntry.COLUMN_DATE,date);
@@ -254,17 +279,17 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         if(saveUri.equals(DiaryContract.DiaryEntry.CONTENT_URI)){
             Uri uri =getContentResolver().insert(DiaryContract.DiaryEntry.CONTENT_URI,values);
             if(uri!=null)
-                message="Note saved!";
+                message="일기가 저장되었습니다!";
             else
-                message="Error saving note";
+                message="일기 저장 실패";
         }
         else{
 
             int rows= getContentResolver().update(CURRENT_DIARY_URI,values,null,null);
             if(rows!=0)
-                message="Note updated!";
+                message="일기가 수정되었습니다!";
             else
-                message="Error updating note";
+                message="일기 수정 실패";
         }
         toast= Toast.makeText(this,message,Toast.LENGTH_SHORT);
         toast.show();
@@ -311,7 +336,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             String date = data.getString(data.getColumnIndex(DiaryContract.DiaryEntry.COLUMN_DATE));
             String description = data.getString(data.getColumnIndex(DiaryContract.DiaryEntry.COLUMN_NOTE));
             Log.v("DetailActivity", description);
-            weather_text_view.setText(title);
+            title_text_view.setText(title);
             date_text_view.setText(date);
             description_text_view.setText(description);
         }
@@ -366,7 +391,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         String stringsb = sb.toString();
         String[] arr1 = stringsb.split(",");
         int len = arr1.length;
-        System.out.println("array" + Arrays.toString(arr1));    // 배열로 전체 출력
+//        System.out.println("array" + Arrays.toString(arr1));    // 배열로 전체 출력
+
+        String textToEmoji = new String();
+        String[] title = text.split(",");
+        System.out.println("title array" + Arrays.toString(title));    // 배열로 전체 출력
+
 
         // 이모지와 텍스트 배열로 나누기
         String[] emojiarr = new String[len/2];
@@ -385,16 +415,33 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 odd++;
             }
         }
-        System.out.println("emoji array" + Arrays.toString(emojiarr));  // 이모지 배열 출력
-        System.out.println("text array " + Arrays.toString(textarr));   //텍스트 배열 출력
+//        System.out.println("emoji array" + Arrays.toString(emojiarr));  // 이모지 배열 출력
+//        System.out.println("text array " + Arrays.toString(textarr));   //텍스트 배열 출력
 
-        System.out.println(text);
+        System.out.println("-----------------------");
+        System.out.println("전달: " + text);
+//
+//        for(int i = 0; i < len/2; i++) {
+//
+//            if(title[i] == textarr[i]) {
+//                title[i] = emojiarr[i];
+//            }
+//        }
+//        textToEmoji = title[0] + title[1] + title[2] +title[3] +title[4];
+//
+//                System.out.println("배열: " + Arrays.toString(title));
+//        System.out.println("출력 문자열: " + textToEmoji);
+//
+//        return textToEmoji;
+
+        // 입력 텍스트와 textarr의 문자열 비교 후 일치하는 인덱스 emojiarr에서 반환
         for(int i = 0; i < len/2; i++) {
             if(text.equals(textarr[i])) {
                 text = emojiarr[i];
             }
         }
         System.out.println(text);
+
         return text;
 
     }
