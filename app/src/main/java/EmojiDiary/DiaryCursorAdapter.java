@@ -1,4 +1,4 @@
-package com.diary.ishita.mydiary;
+package EmojiDiary;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.diary.ishita.mydiary.data.DiaryContract.DiaryEntry;
+import com.diary.ishita.mydiary.R;
+
+import EmojiDiary.data.DiaryContract;
 
 public class DiaryCursorAdapter extends CursorAdapter {
 
@@ -30,8 +32,8 @@ public class DiaryCursorAdapter extends CursorAdapter {
             TextView title_notes = (TextView) view.findViewById(R.id.title_list_view);
             TextView date_notes = (TextView) view.findViewById(R.id.date_list_view);
 
-            String title = cursor.getString(cursor.getColumnIndex(DiaryEntry.COLUMN_TITLE));
-            String date = cursor.getString(cursor.getColumnIndex(DiaryEntry.COLUMN_DATE));
+            String title = cursor.getString(cursor.getColumnIndex(DiaryContract.DiaryEntry.COLUMN_TITLE));
+            String date = cursor.getString(cursor.getColumnIndex(DiaryContract.DiaryEntry.COLUMN_DATE));
 
             title_notes.setText(title);
             date_notes.setText(date);

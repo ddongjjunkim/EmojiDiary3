@@ -1,4 +1,4 @@
-package com.diary.ishita.mydiary.data;
+package EmojiDiary.data;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -8,8 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
-
-import com.diary.ishita.mydiary.data.DiaryContract.DiaryEntry;
 
 // ContentProvider.class: app과 db 사이에서 데이터 접근을 쉽게 하도록 관리해주는 클래스
 // 앱의 코드를 변경하지 않고 데이터 접근을 쉽게 함
@@ -62,21 +60,21 @@ public class DiaryProvider extends ContentProvider {
         switch (match){
 
             case DIARY:
-                cursor= dDB.query(DiaryEntry.TABLE_NAME, projection, selection, selectionArgs,null,null,sortOrder);
+                cursor= dDB.query(DiaryContract.DiaryEntry.TABLE_NAME, projection, selection, selectionArgs,null,null,sortOrder);
                 break;
             case DIARY_ITEM:
-                selection= DiaryEntry._ID+"=?";
+                selection= DiaryContract.DiaryEntry._ID+"=?";
                 selectionArgs= new String[]{String.valueOf(ContentUris.parseId(uri))};
-                cursor= dDB.query(DiaryEntry.TABLE_NAME, projection, selection, selectionArgs,null,null,sortOrder);
+                cursor= dDB.query(DiaryContract.DiaryEntry.TABLE_NAME, projection, selection, selectionArgs,null,null,sortOrder);
                 break;
             case USER:
                 Log.v("before query", uri.toString());
-                cursor= uDB.query(DiaryEntry.USER_TABLE_NAME, projection, selection, selectionArgs,null,null,sortOrder);
+                cursor= uDB.query(DiaryContract.DiaryEntry.USER_TABLE_NAME, projection, selection, selectionArgs,null,null,sortOrder);
                 return cursor;
             case USER_ITEM:
-                selection= DiaryEntry._USER_ID+"=?";
+                selection= DiaryContract.DiaryEntry._USER_ID+"=?";
                 selectionArgs= new String[]{String.valueOf(ContentUris.parseId(uri))};
-                cursor= uDB.query(DiaryEntry.USER_TABLE_NAME, projection,selection,selectionArgs,null,null,sortOrder);
+                cursor= uDB.query(DiaryContract.DiaryEntry.USER_TABLE_NAME, projection,selection,selectionArgs,null,null,sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI "+uri);
@@ -94,13 +92,13 @@ public class DiaryProvider extends ContentProvider {
 
         switch (match){
             case DIARY:
-                return DiaryEntry.CONTENT_LIST_TYPE;
+                return DiaryContract.DiaryEntry.CONTENT_LIST_TYPE;
             case DIARY_ITEM:
-                return DiaryEntry.CONTENT_ITEM_TYPE;
+                return DiaryContract.DiaryEntry.CONTENT_ITEM_TYPE;
             case USER:
-                return DiaryEntry.USER_LIST_TYPE;
+                return DiaryContract.DiaryEntry.USER_LIST_TYPE;
             case USER_ITEM:
-                return DiaryEntry.USER_ITEM_TYPE;
+                return DiaryContract.DiaryEntry.USER_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("unknown uri "+uri);
         }
@@ -136,7 +134,7 @@ public class DiaryProvider extends ContentProvider {
     private Uri insertNote(Uri uri, ContentValues values) {
 
         SQLiteDatabase dDB = mDiaryHelper.getReadableDatabase();
-        long id= dDB.insert(DiaryEntry.TABLE_NAME,null, values);
+        long id= dDB.insert(DiaryContract.DiaryEntry.TABLE_NAME,null, values);
         if(id != 0)
             getContext().getContentResolver().notifyChange(uri,null);
 
@@ -155,29 +153,29 @@ public class DiaryProvider extends ContentProvider {
         int rows;
         switch (match){
             case DIARY:
-                rows = dDB.delete(DiaryEntry.TABLE_NAME, selection, selectionArgs);
+                rows = dDB.delete(DiaryContract.DiaryEntry.TABLE_NAME, selection, selectionArgs);
                 if(rows != 0){
                     getContext().getContentResolver().notifyChange(uri,null);
                 }
                 return rows;
             case DIARY_ITEM:
-                selection = DiaryEntry._ID+"=?";
+                selection = DiaryContract.DiaryEntry._ID+"=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                rows= dDB.delete(DiaryEntry.TABLE_NAME, selection, selectionArgs);
+                rows= dDB.delete(DiaryContract.DiaryEntry.TABLE_NAME, selection, selectionArgs);
                 if(rows!=0){
                     getContext().getContentResolver().notifyChange(uri,null);
                 }
                 return rows;
             case USER:
-                rows = uDB.delete(DiaryEntry.USER_TABLE_NAME, selection, selectionArgs);
+                rows = uDB.delete(DiaryContract.DiaryEntry.USER_TABLE_NAME, selection, selectionArgs);
                 if(rows!=0){
                     getContext().getContentResolver().notifyChange(uri,null);
                 }
                 return rows;
             case USER_ITEM:
-                selection = DiaryEntry._USER_ID+"=?";
+                selection = DiaryContract.DiaryEntry._USER_ID+"=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                rows = uDB.delete(DiaryEntry.USER_TABLE_NAME, selection, selectionArgs);
+                rows = uDB.delete(DiaryContract.DiaryEntry.USER_TABLE_NAME, selection, selectionArgs);
                 if(rows != 0){
                     getContext().getContentResolver().notifyChange(uri,null);
                 }
@@ -203,29 +201,29 @@ public class DiaryProvider extends ContentProvider {
         int rows;
         switch (match){
             case DIARY:
-                rows = dDB.update(DiaryEntry.TABLE_NAME, values, selection, selectionArgs);
+                rows = dDB.update(DiaryContract.DiaryEntry.TABLE_NAME, values, selection, selectionArgs);
                 if(rows != 0){
                     getContext().getContentResolver().notifyChange(uri,null);
                 }
                 return rows;
             case DIARY_ITEM:
-                selection = DiaryEntry._ID+"=?";
+                selection = DiaryContract.DiaryEntry._ID+"=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                rows = dDB.update(DiaryEntry.TABLE_NAME, values, selection, selectionArgs);
+                rows = dDB.update(DiaryContract.DiaryEntry.TABLE_NAME, values, selection, selectionArgs);
                 if(rows != 0){
                     getContext().getContentResolver().notifyChange(uri,null);
                 }
                 return rows;
             case USER:
-                rows = uDB.update(DiaryEntry.USER_TABLE_NAME, values, selection, selectionArgs);
+                rows = uDB.update(DiaryContract.DiaryEntry.USER_TABLE_NAME, values, selection, selectionArgs);
                 if(rows != 0){
                     getContext().getContentResolver().notifyChange(uri,null);
                 }
                 return rows;
             case USER_ITEM:
-                selection = DiaryEntry._USER_ID + "=?";
+                selection = DiaryContract.DiaryEntry._USER_ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                rows= uDB.update(DiaryEntry.USER_TABLE_NAME, values, selection, selectionArgs);
+                rows= uDB.update(DiaryContract.DiaryEntry.USER_TABLE_NAME, values, selection, selectionArgs);
                 return rows;
             default:
                  throw new IllegalArgumentException("Cannot update the unknown URI "+uri);

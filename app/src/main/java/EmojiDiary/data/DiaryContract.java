@@ -1,4 +1,4 @@
-package com.diary.ishita.mydiary.data;
+package EmojiDiary.data;
 
 import android.content.ContentResolver;
 import android.net.Uri;

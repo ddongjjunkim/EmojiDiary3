@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context="com.diary.ishita.mydiary.UserProfileActivity"
+    tools:context="com.diary.ishita.mydiary.com.diary.mydiary.UserProfileActivity"
     android:orientation="vertical">
 <TextView
     android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.diary.ishita.mydiary;
+package EmojiDiary;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.diary.ishita.mydiary.data.DiaryContract.DiaryEntry;
+import com.diary.ishita.mydiary.R;
+
+import EmojiDiary.data.DiaryContract;
 
 public class UserProfileActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -32,8 +34,8 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         user_name=(EditText)findViewById(R.id.user_name_edit_text_view);
         user_email=(EditText)findViewById(R.id.user_email_edit_text_view);
 
-        String[] projection = {DiaryEntry._USER_ID, DiaryEntry.USER_COLUMN_NAME, DiaryEntry.USER_COLUMN_EMAIL};
-        Cursor cursor =getContentResolver().query(DiaryEntry.USER_CONTENT_URI,projection,null,null,null);
+        String[] projection = {DiaryContract.DiaryEntry._USER_ID, DiaryContract.DiaryEntry.USER_COLUMN_NAME, DiaryContract.DiaryEntry.USER_COLUMN_EMAIL};
+        Cursor cursor =getContentResolver().query(DiaryContract.DiaryEntry.USER_CONTENT_URI,projection,null,null,null);
         if(cursor.getCount()!=0) {
             getLoaderManager().initLoader(URL_LOADER, null, this);
             has_saved = true;
@@ -96,22 +98,22 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
 //        String notes = user_note.getText().toString();
 
         //2. put()로 항목, 값을 DB테이블 순서에 맞게 집어넣음.
-        values.put(DiaryEntry.USER_COLUMN_NAME,name);
-        values.put(DiaryEntry.USER_COLUMN_EMAIL,email);
+        values.put(DiaryContract.DiaryEntry.USER_COLUMN_NAME,name);
+        values.put(DiaryContract.DiaryEntry.USER_COLUMN_EMAIL,email);
 //        values.put(DiaryEntry.USER_COLUMN_NOTES,notes);
         Toast toast;
         String message = null;
 
         // 프로필 처음 등록 시, DB에 새로 저장 후 저장 메세지 출력
         if(!has_saved) {
-            Uri uri = getContentResolver().insert(DiaryEntry.USER_CONTENT_URI, values);
+            Uri uri = getContentResolver().insert(DiaryContract.DiaryEntry.USER_CONTENT_URI, values);
             if(uri != null)
                 has_saved = true;
             message = "프로필이 저장되었습니다!";
         }
         // 기존 프로필 업데이트 시, DB 업데이트 후 업데이트 메세지
         else{
-            int rows = getContentResolver().update(DiaryEntry.USER_CONTENT_URI, values,null,null);
+            int rows = getContentResolver().update(DiaryContract.DiaryEntry.USER_CONTENT_URI, values,null,null);
             if(rows != 0)
                 message="프로필이 업데이트되었습니다!";
         }
@@ -150,7 +152,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     //프로필 삭제 함수
     private void delete() {
         //DB에서 프로필 삭제
-        getContentResolver().delete(DiaryEntry.USER_CONTENT_URI,null,null);
+        getContentResolver().delete(DiaryContract.DiaryEntry.USER_CONTENT_URI,null,null);
 
         Toast toast= Toast.makeText(this,"프로필이 삭제되었습니다",Toast.LENGTH_SHORT);
         toast.show();
@@ -168,12 +170,12 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         // 컨텐트에서 가져올 정보들 string에 담아두기
-        String[] projection = {DiaryEntry._USER_ID, DiaryEntry.USER_COLUMN_NAME, DiaryEntry.USER_COLUMN_EMAIL};
+        String[] projection = {DiaryContract.DiaryEntry._USER_ID, DiaryContract.DiaryEntry.USER_COLUMN_NAME, DiaryContract.DiaryEntry.USER_COLUMN_EMAIL};
         switch(id){
             case URL_LOADER:
                 // CursorLoader(현재 액티비리, 가져올 컨텐트의 uri, 가져올 정보; null이면 모든 컬럼, 가져올 데이터 필터링하는 정보; 모든 데이터, , 정렬 순)
                 // 현재 액티비티로 user content의 uri를 가져옴; ID, name, email 가져오기
-                return new CursorLoader(this, DiaryEntry.USER_CONTENT_URI, projection,null,null,null);
+                return new CursorLoader(this, DiaryContract.DiaryEntry.USER_CONTENT_URI, projection,null,null,null);
             default:
                 return null;
         }
@@ -187,8 +189,8 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
             return;
         }
         data.moveToFirst();
-        user_name.setText(data.getString(data.getColumnIndex(DiaryEntry.USER_COLUMN_NAME)));
-        user_email.setText(data.getString(data.getColumnIndex(DiaryEntry.USER_COLUMN_EMAIL)));
+        user_name.setText(data.getString(data.getColumnIndex(DiaryContract.DiaryEntry.USER_COLUMN_NAME)));
+        user_email.setText(data.getString(data.getColumnIndex(DiaryContract.DiaryEntry.USER_COLUMN_EMAIL)));
     }
 
     @Override

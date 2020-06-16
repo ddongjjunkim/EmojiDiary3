@@ -1,4 +1,4 @@
-package com.diary.ishita.mydiary;
+package EmojiDiary;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -24,7 +24,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.diary.ishita.mydiary.data.DiaryContract.DiaryEntry;
+import com.diary.ishita.mydiary.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,6 +35,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+
+import EmojiDiary.data.DiaryContract;
 
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -222,7 +224,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 return true;
             case R.id.action_save:
                 if(CURRENT_DIARY_URI==null)
-                saveDiary(DiaryEntry.CONTENT_URI);
+                saveDiary(DiaryContract.DiaryEntry.CONTENT_URI);
                 else
                     saveDiary(CURRENT_DIARY_URI);
                 return true;
@@ -243,14 +245,14 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         String date = date_text_view.getText().toString();
         String description = description_text_view.getText().toString();
 
-        values.put(DiaryEntry.COLUMN_TITLE,title);
-        values.put(DiaryEntry.COLUMN_DATE,date);
-        values.put(DiaryEntry.COLUMN_NOTE,description);
+        values.put(DiaryContract.DiaryEntry.COLUMN_TITLE,title);
+        values.put(DiaryContract.DiaryEntry.COLUMN_DATE,date);
+        values.put(DiaryContract.DiaryEntry.COLUMN_NOTE,description);
 
         Toast toast;
         String message;
-        if(saveUri.equals(DiaryEntry.CONTENT_URI)){
-            Uri uri =getContentResolver().insert(DiaryEntry.CONTENT_URI,values);
+        if(saveUri.equals(DiaryContract.DiaryEntry.CONTENT_URI)){
+            Uri uri =getContentResolver().insert(DiaryContract.DiaryEntry.CONTENT_URI,values);
             if(uri!=null)
                 message="Note saved!";
             else
@@ -291,7 +293,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection= {DiaryEntry._ID, DiaryEntry.COLUMN_TITLE, DiaryEntry.COLUMN_DATE, DiaryEntry.COLUMN_NOTE};
+        String[] projection= {DiaryContract.DiaryEntry._ID, DiaryContract.DiaryEntry.COLUMN_TITLE, DiaryContract.DiaryEntry.COLUMN_DATE, DiaryContract.DiaryEntry.COLUMN_NOTE};
         return new CursorLoader(this, CURRENT_DIARY_URI, projection,null,null,null);
     }
 
@@ -305,9 +307,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             return;
         else {
             data.moveToFirst();
-            String title = data.getString(data.getColumnIndex(DiaryEntry.COLUMN_TITLE));
-            String date = data.getString(data.getColumnIndex(DiaryEntry.COLUMN_DATE));
-            String description = data.getString(data.getColumnIndex(DiaryEntry.COLUMN_NOTE));
+            String title = data.getString(data.getColumnIndex(DiaryContract.DiaryEntry.COLUMN_TITLE));
+            String date = data.getString(data.getColumnIndex(DiaryContract.DiaryEntry.COLUMN_DATE));
+            String description = data.getString(data.getColumnIndex(DiaryContract.DiaryEntry.COLUMN_NOTE));
             Log.v("DetailActivity", description);
             weather_text_view.setText(title);
             date_text_view.setText(date);
@@ -370,8 +372,10 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         String[] arr1 = stringsb.split(",");
         int len = arr1.length;
 
-        String[] emojiarr = new String[len];   //짝
-        String[] textarr = new String[len];    //홀
+       String[] emojiarr = new String[len/2];   //짝
+       String[] textarr = new String[len/2];    //홀
+//       ArrayList<String> emojiarrList = new ArrayList<>();
+//        ArrayList<String> textarrList = new ArrayList<String>();
 
         System.out.println("array" + Arrays.toString(arr1));
 
@@ -381,12 +385,16 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         for (int i = 0; i < arr1.length; i++) {
             if (i % 2 == 0) {
                 emojiarr[even] = arr1[i];
-                System.out.println("emoji1: " + emojiarr[i]);
+//                emojiarrList.add(arr1[i]);
+//                String[] emojiarr = emojiarrList.toArray(new String[emojiarrList.size()]);
+                System.out.println("emoji1: " + emojiarr[i/2]);
                 System.out.println("emoji array" + Arrays.toString(emojiarr));
+//                System.out.println("emoji1: " + emojiarr.get(i));
+//                System.out.println("emoji array" + Arrays.toString(emojiarr.toArray()));
                 even++;
             } else if (i % 2 != 0) {
                 textarr[odd] = arr1[i];
-                System.out.println("text: " + textarr[i]);
+                System.out.println("text: " + textarr[(i-1)/2]);
                 System.out.println("text array " + Arrays.toString(textarr));
                 odd++;
             }

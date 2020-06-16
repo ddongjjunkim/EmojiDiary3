@@ -1,4 +1,4 @@
-package com.diary.ishita.mydiary;
+package EmojiDiary;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -25,12 +25,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.diary.ishita.mydiary.data.DiaryContract.DiaryEntry;
-import com.diary.ishita.mydiary.data.DiaryDbHelper;
+import com.diary.ishita.mydiary.R;
+
+import EmojiDiary.data.DiaryContract;
+import EmojiDiary.data.DiaryDbHelper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,LoaderManager.LoaderCallbacks<Cursor>{
 
-    private  DiaryDbHelper mDbHelper;
+    private DiaryDbHelper mDbHelper;
     private ListView listView;
     private DiaryCursorAdapter mAdapter;
     private View EmptyView;
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Uri uri= ContentUris.withAppendedId(DiaryEntry.CONTENT_URI,id);
+                Uri uri= ContentUris.withAppendedId(DiaryContract.DiaryEntry.CONTENT_URI,id);
                 Intent intent= new Intent(MainActivity.this,DetailActivity.class);
                 intent.setData(uri);
                 startActivity(intent);
@@ -93,14 +95,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         user_nav_name = (TextView)header.findViewById(R.id.user_name);
         user_nav_email = (TextView)header.findViewById(R.id.user_email);
 
-        String[] projection =new String[]{DiaryEntry._USER_ID,DiaryEntry.USER_COLUMN_NAME,DiaryEntry.USER_COLUMN_EMAIL};
+        String[] projection =new String[]{DiaryContract.DiaryEntry._USER_ID, DiaryContract.DiaryEntry.USER_COLUMN_NAME, DiaryContract.DiaryEntry.USER_COLUMN_EMAIL};
 
         // 사용자 데이터베이스 접근
-        Cursor cur = getContentResolver().query(DiaryEntry.USER_CONTENT_URI,projection,null,null,null);
+        Cursor cur = getContentResolver().query(DiaryContract.DiaryEntry.USER_CONTENT_URI,projection,null,null,null);
         if(cur.getCount()!=0) {
             cur.moveToFirst();
-            user_nav_name.setText(cur.getString(cur.getColumnIndex(DiaryEntry.USER_COLUMN_NAME)));
-            user_nav_email.setText(cur.getString(cur.getColumnIndex(DiaryEntry.USER_COLUMN_EMAIL)));
+            user_nav_name.setText(cur.getString(cur.getColumnIndex(DiaryContract.DiaryEntry.USER_COLUMN_NAME)));
+            user_nav_email.setText(cur.getString(cur.getColumnIndex(DiaryContract.DiaryEntry.USER_COLUMN_EMAIL)));
         }
     }
 
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         builder.setPositiveButton("삭제", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getContentResolver().delete(DiaryEntry.CONTENT_URI,null,null);
+                getContentResolver().delete(DiaryContract.DiaryEntry.CONTENT_URI,null,null);
             }
         });
         builder.setNegativeButton("취소", new DialogInterface.OnClickListener(){
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void deleteAll() {
-        getContentResolver().delete(DiaryEntry.CONTENT_URI,null,null);
+        getContentResolver().delete(DiaryContract.DiaryEntry.CONTENT_URI,null,null);
 
     }
 
@@ -195,10 +197,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 다이어리 데이터 로딩하기
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = {DiaryEntry._ID, DiaryEntry.COLUMN_TITLE, DiaryEntry.COLUMN_DATE};
+        String[] projection = {DiaryContract.DiaryEntry._ID, DiaryContract.DiaryEntry.COLUMN_TITLE, DiaryContract.DiaryEntry.COLUMN_DATE};
         switch (id){
             case URL_LOADER:
-                return new CursorLoader(this,DiaryEntry.CONTENT_URI,projection,null,null,null);
+                return new CursorLoader(this, DiaryContract.DiaryEntry.CONTENT_URI,projection,null,null,null);
             default:
                 return null;
         }
