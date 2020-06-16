@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/EmojiDiary3.iml" filepath="$PROJECT_DIR$/EmojiDiary3.iml" group="EmojiDiary3" />
+      <module fileurl="file://$PROJECT_DIR$/app/EmojiDiary3-app.iml" filepath="$PROJECT_DIR$/app/EmojiDiary3-app.iml" group="EmojiDiary3/app" />
       <module fileurl="file://$PROJECT_DIR$/MyDiary2.iml" filepath="$PROJECT_DIR$/MyDiary2.iml" group="MyDiary2" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="MyDiary2/app" />
     </modules>

@@ -241,7 +241,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         ContentValues values = new ContentValues();
 
         String title= weather_text_view.getText().toString();
-        convertToEmoji();
+        title = convertToEmoji(title);
         String date = date_text_view.getText().toString();
         String description = description_text_view.getText().toString();
 
@@ -330,12 +330,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     // String 읽어들이기 위한 객체 생성
     StringBuilder sb = new StringBuilder("");
+
     // emojidata 파일 불러오기
     public void openFile() {
 
         // 텍스트 파일 읽어서 buffer에 저장
         try {
-            InputStream in = this.getResources().openRawResource(R.raw.emojidata);
+            InputStream in = this.getResources().openRawResource(R.raw.emoji_data_1);
             BufferedReader buffer = null;
             if (in != null) {
                 InputStreamReader stream = new InputStreamReader(in, "utf-8");
@@ -348,83 +349,58 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             }
             in.close();
 
-//            System.out.println("-----------------------------------");
-//            System.out.println(sb.toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(sb.toString());
     }
 
-//    public static final String[] emojiarr = new String[0];   //짝
-//    public static final String[] textarr = new String[0];    //홀
 
     // 사용자에게 받은 텍스트를 이모지로 변환해주는 함수
-    public void convertToEmoji() {
+    public String convertToEmoji(String text) {
         openFile();
 
-        String text = weather_text_view.getText().toString();
-        System.out.println(text);
-        System.out.println(sb.toString());
+        // 콤마 단위로 split해서 배열 만들기
         String stringsb = sb.toString();
-        //ArrayList<String> text = data
         String[] arr1 = stringsb.split(",");
         int len = arr1.length;
+        System.out.println("array" + Arrays.toString(arr1));    // 배열로 전체 출력
 
-       String[] emojiarr = new String[len/2];   //짝
-       String[] textarr = new String[len/2];    //홀
-//       ArrayList<String> emojiarrList = new ArrayList<>();
-//        ArrayList<String> textarrList = new ArrayList<String>();
-
-        System.out.println("array" + Arrays.toString(arr1));
+        // 이모지와 텍스트 배열로 나누기
+        String[] emojiarr = new String[len/2];
+        String[] textarr = new String[len/2];
 
         int even = 0;
         int odd = 0;
-
-        for (int i = 0; i < arr1.length; i++) {
+        for (int i = 0; i < len; i++) {
             if (i % 2 == 0) {
                 emojiarr[even] = arr1[i];
-                System.out.println("emoji1: " + emojiarr[i/2]);
-                System.out.println("emoji array" + Arrays.toString(emojiarr));
+//                System.out.println("emoji1: " + emojiarr[i/2]);
                 even++;
             } else if (i % 2 != 0) {
                 textarr[odd] = arr1[i];
-                System.out.println("text: " + textarr[(i-1)/2]);
-                System.out.println("text array " + Arrays.toString(textarr));
+//                System.out.println("text: " + textarr[(i-1)/2]);
                 odd++;
             }
         }
+        System.out.println("emoji array" + Arrays.toString(emojiarr));  // 이모지 배열 출력
+        System.out.println("text array " + Arrays.toString(textarr));   //텍스트 배열 출력
 
-//        ArrayList<String> arrayList = new ArrayList<>();
-//        for(String temp : arr1) {
-//            arrayList.add(temp);
-//        }
-//
-//        ArrayList<String> emojiarr = new ArrayList();
-//        ArrayList<String> textarr = new ArrayList();
-//
-//        System.out.println("emojidata array" + Arrays.toString(arr1));
-//        int even =0;
-//        int odd =0;
-//
-//        for(int i = 0; i< arrayList.size(); i++) {
-//            if(i%2 == 0 ) {
-//                emojiarr.add(arrayList.get(i));
-//                System.out.println("emoji: " + emojiarr.get(i));
-//                System.out.println(emojiarr);
-//                even++;
-//            }
-//
-//            else if(i%2 != 0 ) {
-//                textarr.add(arrayList.get(i));
-//                System.out.println("text: " + textarr.get(i));
-//                System.out.println(textarr);
-//                odd++;
-//            }
-//        }
+        System.out.println(text);
+        for(int i = 0; i < len/2; i++) {
+            if(text.equals(textarr[i])) {
+                text = emojiarr[i];
+            }
+        }
+        System.out.println(text);
+        return text;
 
     }
+
+
+
 
  }
 
