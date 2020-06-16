@@ -385,12 +385,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         for (int i = 0; i < arr1.length; i++) {
             if (i % 2 == 0) {
                 emojiarr[even] = arr1[i];
-//                emojiarrList.add(arr1[i]);
-//                String[] emojiarr = emojiarrList.toArray(new String[emojiarrList.size()]);
                 System.out.println("emoji1: " + emojiarr[i/2]);
                 System.out.println("emoji array" + Arrays.toString(emojiarr));
-//                System.out.println("emoji1: " + emojiarr.get(i));
-//                System.out.println("emoji array" + Arrays.toString(emojiarr.toArray()));
                 even++;
             } else if (i % 2 != 0) {
                 textarr[odd] = arr1[i];
