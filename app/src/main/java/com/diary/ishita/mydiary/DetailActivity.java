@@ -3,15 +3,12 @@ package com.diary.ishita.mydiary;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.LoaderManager;
-import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -54,8 +51,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private static Uri CURRENT_DIARY_URI;
     private static final int LOADER_ID= 1;
     private static Button date_range;
-    private static Button title_mic_button;
-    private static Button description_mic_button;
     private static Calendar myCalendar;
 
     @Override
@@ -65,23 +60,20 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         Intent intent =getIntent();
         CURRENT_DIARY_URI=intent.getData();
         if(CURRENT_DIARY_URI==null){
-            setTitle("Add note");
+            setTitle("New");
             invalidateOptionsMenu();
         }
         else {
-            setTitle("Edit note");
+            setTitle("Edit");
             getLoaderManager().initLoader(LOADER_ID,null,this);
         }
 
-        image_view_detail_activity= (ImageView)findViewById(R.id.detail_activity_image_view);
         weather_text_view=(EditText) findViewById(R.id.weather_note);
         mood_text_view=(EditText) findViewById(R.id.mood_note);
         key1_text_view=(EditText) findViewById(R.id.key_note_1);
         date_text_view= (TextView)findViewById(R.id.date_detail_activity);
         description_text_view=(EditText)findViewById(R.id.description_detail_Activity);
         date_range =(Button)findViewById(R.id.date_selector);
-//        title_mic_button=(Button)findViewById(R.id.title_mic_button);
-//        description_mic_button=(Button)findViewById(R.id.description_mic_button);
         myCalendar = Calendar.getInstance();
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -106,69 +98,15 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-//
-//        image_view_detail_activity.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(DetailActivity.this,ImageActivity.class);
-//                intent.setData(CURRENT_DIARY_URI);
-//                startActivity(intent);
-//            }
-//        });
-//        image_view_detail_activity.setOnTouchListener(mTouchListener);
+
         date_range.setOnTouchListener(mTouchListener);
 
         weather_text_view.setOnTouchListener(mTouchListener);
 
         description_text_view.setOnTouchListener(mTouchListener);
 
-//        title_mic_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, new String[]{"hin-IND"});
-//                try{
-//                    startActivityForResult(intent,RESULT_TITLE_SPEECH);
-//                }catch (ActivityNotFoundException a){
-//                    Toast toast = Toast.makeText(getApplicationContext(),"Your device dosen't support speech recognisation!",Toast.LENGTH_SHORT);
-//                    toast.show();
-//                }
-//            }
-//        });
-//        description_mic_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent= new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,new String[]{"en"});
-//                try{
-//                    startActivityForResult(intent,RESULT_DESCRIPTION_TEXT);
-//                }catch (ActivityNotFoundException a){
-//                    Toast toast = Toast.makeText(getApplicationContext(),"Your device dosen't support speech recognisation!",Toast.LENGTH_SHORT);
-//                    toast.show();
-//                }
-//            }
-//        });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch(requestCode){
-//            case RESULT_TITLE_SPEECH:
-//                if(resultCode==RESULT_OK&& data!=null){
-//                    ArrayList<String> text = data
-//                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-//                    title_text_view.setText(text.get(0));
-//                }
-//                break;
-//            case RESULT_DESCRIPTION_TEXT:
-//                if(resultCode==RESULT_OK && data!=null){
-//                    ArrayList<String> text= data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-//                    description_text_view.setText(text.get(0));
-//                }
-//                 break;
-//        }
-//    }
         //TEST!!!
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -192,7 +130,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        // If this is a new diary, hide the "Delete" menu item.
+        // 새로 작성된 다이어리인 경우 '삭제'버튼 숨기기
         if (CURRENT_DIARY_URI == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
@@ -205,7 +143,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         getMenuInflater().inflate(R.menu.add_note,menu);
         return true;
     }
-private boolean has_filled_diary= false;
+
+    private boolean has_filled_diary= false;
+
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -214,50 +154,42 @@ private boolean has_filled_diary= false;
         }
     };
 
-
-
     private void showUnsavedChangesDialog(
             DialogInterface.OnClickListener discardButtonClickListener) {
-        // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Changes may not be saved!");
-        builder.setPositiveButton("Discard", discardButtonClickListener);
-        builder.setNegativeButton("Keep Editing", new DialogInterface.OnClickListener() {
+        builder.setMessage("수정사항이 저장되지 않을 수 있습니다!");
+        builder.setPositiveButton("삭제", discardButtonClickListener);
+        builder.setNegativeButton("계속 작성", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Keep editing" button, so dismiss the dialog
-                // and continue editing the diary.
                 if (dialog != null) {
                     dialog.dismiss();
                 }
             }
         });
 
-        // Create and show the AlertDialog
+        // alert dialog 띄우기
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
     @Override
     public void onBackPressed() {
-        // If the diary hasn't changed, continue with handling back button press
+        // 다이어리가 수정되지 않았으면 back button 활성화
         if (!has_filled_diary) {
             super.onBackPressed();
             return;
         }
 
-        // Otherwise if there are unsaved changes, setup a dialog to warn the user.
-        // Create a click listener to handle the user confirming that changes should be discarded.
+        // 수정된 내용이 저장되지 않은 채로 back하면 경고메세지 출력
         DialogInterface.OnClickListener discardButtonClickListener =
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // User clicked "Discard" button, close the current activity.
                         finish();
                     }
                 };
 
-        // Show dialog that there are unsaved changes
+        // unsave 경고 출력
         showUnsavedChangesDialog(discardButtonClickListener);
     }
 
@@ -280,11 +212,9 @@ private boolean has_filled_diary= false;
                 }
             }
         });
-
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -306,16 +236,6 @@ private boolean has_filled_diary= false;
         }
     }
 
-//    private static byte[] image_view_set_byte;
-//    private static boolean has_set_image_byte= false;
-//
-//    public static void setImagebyte(byte[] image_byte){
-//        image_view_set_byte=image_byte;
-//        has_set_image_byte=true;
-//        Bitmap bitmap = DbBitmapUtils.getImage(image_byte);
-//        image_view_detail_activity.setImageBitmap(bitmap);
-//    }
-
     // 다이어리 저장 함수
     private void saveDiary(Uri saveUri) {
         ContentValues values = new ContentValues();
@@ -325,24 +245,9 @@ private boolean has_filled_diary= false;
         String date = date_text_view.getText().toString();
         String description = description_text_view.getText().toString();
 
-//        byte[] image_bytes;
-//        if(has_set_image_byte) {
-//            BitmapDrawable drawable = (BitmapDrawable) image_view_detail_activity.getDrawable();
-//            Bitmap bitmap = drawable.getBitmap();
-//            image_bytes= DbBitmapUtils.getBytes(bitmap);
-        /**}
-        else{
-            image_view_detail_activity.setImageResource(R.mipmap.person_image);
-            BitmapDrawable drawable = (BitmapDrawable) image_view_detail_activity.getDrawable();
-            Bitmap bitmap = drawable.getBitmap();
-            image_bytes= DbBitmapUtils.getBytes(bitmap);
-        }
-**/
-
         values.put(DiaryEntry.COLUMN_TITLE,title);
         values.put(DiaryEntry.COLUMN_DATE,date);
         values.put(DiaryEntry.COLUMN_NOTE,description);
-//        values.put(DiaryEntry.COLUMN_IMAGE_DATA, image_bytes);
 
         Toast toast;
         String message;
@@ -363,12 +268,12 @@ private boolean has_filled_diary= false;
         }
         toast= Toast.makeText(this,message,Toast.LENGTH_SHORT);
         toast.show();
-//        has_set_image_byte=false;
+
         MainActivity.has_diary=true;
         finish();
     }
 
-    //일기 삭제 함수
+    // 다이어리 삭제 함수
     private void deleteDiary() {
 
         if(CURRENT_DIARY_URI!=null){
@@ -398,7 +303,6 @@ private boolean has_filled_diary= false;
     }
 
     private void update(Cursor data) {
-
         if(data.getCount()==0)
             return;
         else {
@@ -410,14 +314,6 @@ private boolean has_filled_diary= false;
             weather_text_view.setText(title);
             date_text_view.setText(date);
             description_text_view.setText(description);
-
-//            byte[] image_byte = data.getBlob(data.getColumnIndex(DiaryEntry.COLUMN_IMAGE_DATA));
-//            if (image_byte == null) {
-//                image_view_detail_activity.setImageResource(R.mipmap.person_image);
-//            } else {
-//                Bitmap bitmap = DbBitmapUtils.getImage(image_byte);
-//                image_view_detail_activity.setImageBitmap(bitmap);
-//            }
         }
 
     }
@@ -434,9 +330,10 @@ private boolean has_filled_diary= false;
 
     // String 읽어들이기 위한 객체 생성
     StringBuilder sb = new StringBuilder("");
+    // emojidata 파일 불러오기
     public void openFile() {
 
-        //emojidata.txt 파일 읽어서 buffer에 저장
+        // 텍스트 파일 읽어서 buffer에 저장
         try {
             InputStream in = this.getResources().openRawResource(R.raw.emojidata);
             BufferedReader buffer = null;
@@ -463,8 +360,8 @@ private boolean has_filled_diary= false;
 //    public static final String[] emojiarr = new String[0];   //짝
 //    public static final String[] textarr = new String[0];    //홀
 
+    // 사용자에게 받은 텍스트를 이모지로 변환해주는 함수
     public void convertToEmoji() {
-
         openFile();
 
         String text = weather_text_view.getText().toString();

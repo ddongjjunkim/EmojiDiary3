@@ -21,14 +21,13 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
 
     private static EditText  user_name;
     private static EditText user_email;
-//    private static EditText user_note;
     private static boolean has_saved= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        setTitle("내 프로필 설정");
+        setTitle("프로필 만들기");
 
         user_name=(EditText)findViewById(R.id.user_name_edit_text_view);
         user_email=(EditText)findViewById(R.id.user_email_edit_text_view);

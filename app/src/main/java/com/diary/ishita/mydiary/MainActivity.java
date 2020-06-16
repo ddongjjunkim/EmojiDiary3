@@ -8,10 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,25 +17,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.diary.ishita.mydiary.data.DiaryContract.DiaryEntry;
 import com.diary.ishita.mydiary.data.DiaryDbHelper;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -47,9 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View EmptyView;
     public static TextView user_nav_name;
     public static TextView user_nav_email;
-    public static ImageView user_nav_image;
-    public static boolean has_set_image = false;
-    TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,74 +67,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-        // Create and/or open a database to read from it
-        // 내용을 읽어오기 위해 db를 연다.
+        // 다이어리 내용 읽어오기 위해 DB열기
         mDbHelper = new DiaryDbHelper(this);
         listView = (ListView)findViewById(R.id.list_view);
-        //
         EmptyView = (View)findViewById(R.id.empty_view);
         listView.setEmptyView(EmptyView);
-
         mAdapter = new DiaryCursorAdapter(this,null);
 
-        //xml파일에서 배치한 ListView를 참조하기 위해 findViewById 메서드를 호출한 후에 setAdapter 메서드로 아답터를 설정합니다.
+        // xml파일에 배치한 ListView를 참조하기 위해 findViewById 메서드를 호출한 후에 setAdapter 메서드로 아답터를 설정합니다.
         listView.setAdapter(mAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Uri uri= ContentUris.withAppendedId(DiaryEntry.CONTENT_URI,id);
-
                 Intent intent= new Intent(MainActivity.this,DetailActivity.class);
                 intent.setData(uri);
                 startActivity(intent);
             }
         });
 
-        //액티비티와 프레그먼트 사이의 비동기 데이터를 사용하기 위해 loadermanager 사용
-
+        // Loadermanage: 액티비티와 프레그먼트 사이 비동기 데이터 사용하기 위함
         getLoaderManager().initLoader(URL_LOADER,null,this);
         View header=navigationView.getHeaderView(0);
         user_nav_name = (TextView)header.findViewById(R.id.user_name);
         user_nav_email = (TextView)header.findViewById(R.id.user_email);
-//        user_nav_image = (ImageView)header.findViewById(R.id.User_photo);
-//
-//        user_nav_image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                   Intent intent = new Intent(MainActivity.this,UserImageActivity.class);
-//                   startActivity(intent);
-//            }
-//        });
 
         String[] projection =new String[]{DiaryEntry._USER_ID,DiaryEntry.USER_COLUMN_NAME,DiaryEntry.USER_COLUMN_EMAIL};
 
-        //유저 데이터베이스 접근
+        // 사용자 데이터베이스 접근
         Cursor cur = getContentResolver().query(DiaryEntry.USER_CONTENT_URI,projection,null,null,null);
         if(cur.getCount()!=0) {
             cur.moveToFirst();
             user_nav_name.setText(cur.getString(cur.getColumnIndex(DiaryEntry.USER_COLUMN_NAME)));
             user_nav_email.setText(cur.getString(cur.getColumnIndex(DiaryEntry.USER_COLUMN_EMAIL)));
         }
-
-        //이미지데이터 접근
-//        String[] projection = new String[]{ DiaryEntry._IMAGE_ID,DiaryEntry.COLUMN_USER_IMAGE_DATA};
-//        Cursor c= getContentResolver().query(DiaryEntry.IMAGE_URI,projection,null,null,null);
-//        if((c.getCount()!=0)&&(c!=null)){
-//            c.moveToFirst();
-//            if(c.getBlob(1)!=null) {
-//                byte[] image = c.getBlob(1);
-//                Bitmap b = DbBitmapUtils.getImage(image);
-//                user_nav_image.setImageBitmap(b);
-//            }
-//        }
-
-
     }
 
-    //뒤로가기 버튼 눌렀을 경우를 처리하는 함수
+    // back button 처리
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -209,17 +165,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         alertDialog.show();
     }
 
+    private void deleteAll() {
+        getContentResolver().delete(DiaryEntry.CONTENT_URI,null,null);
 
-//    private void deleteAll() {
-//        getContentResolver().delete(DiaryEntry.CONTENT_URI,null,null);
-//
-//    }
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // 목록의 item을 눌렀을 때 navigation view를 handle처리
         int id = item.getItemId();
+
         switch (id){
             case R.id.user_profile:
              Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
@@ -232,25 +189,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-// 개발자에게 이메일 보내기
-//    private void emailIntent() {
-//        Intent intent = new Intent(Intent.ACTION_SENDTO);
-//        intent.setData(Uri.parse("mailto:"));
-//        intent.putExtra(Intent.EXTRA_SUBJECT,"Feedback regarding myDiary app");
-//        intent.putExtra(Intent.EXTRA_EMAIL,new String[]{"ishitasharma12699@gmail.com"});
-//        if(intent.resolveActivity(getPackageManager())!=null){
-//            startActivity(intent);
-//        }
-//
-//    }
-
     //로더 ID = 0
     private final static int URL_LOADER= 0;
 
     // 다이어리 데이터 로딩하기
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-//        String[] projection = {DiaryEntry._ID, DiaryEntry.COLUMN_TITLE, DiaryEntry.COLUMN_DATE, DiaryEntry.COLUMN_IMAGE_DATA};
         String[] projection = {DiaryEntry._ID, DiaryEntry.COLUMN_TITLE, DiaryEntry.COLUMN_DATE};
         switch (id){
             case URL_LOADER:
@@ -273,33 +217,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          mAdapter.swapCursor(null);
     }
 
-
-    //emojidata.csv file을 불러온다.
-    public void openCSV() {
-    try {
-        InputStream in = this.getResources().openRawResource(R.raw.emojidata);
-
-        BufferedReader buffer = null;
-        if (in != null) {
-            InputStreamReader stream = new InputStreamReader(in, "utf-8");
-            buffer = new BufferedReader(stream);
-        }
-
-        String read;
-        StringBuilder sb = new StringBuilder("");
-
-        while ((read = buffer.readLine()) != null) {
-            sb.append(read);
-        }
-        in.close();
-
-        System.out.println(sb.toString());
-
-    } catch (UnsupportedEncodingException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
-}
 }
