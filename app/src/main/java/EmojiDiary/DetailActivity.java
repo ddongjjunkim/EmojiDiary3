@@ -248,24 +248,23 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private void saveDiary(Uri saveUri) {
         ContentValues values = new ContentValues();
 
-        String weather= weather_text_view.getText().toString();
+        String weather = weather_text_view.getText().toString();
         String mood= mood_text_view.getText().toString();
         String keyword1= key1_text_view.getText().toString();
         String keyword2= key2_text_view.getText().toString();
         String keyword3= key3_text_view.getText().toString();
-        String w = convertToEmoji(weather);
-        String m = convertToEmoji(mood);
 
-//        String title = title_text_view.getText().toString();
-
-        String title = w + m;
+//      String title = convertToEmoji(weather);
 
 
-//        String title_text = weather + "," + mood + "," + keyword1 + "," + keyword2 + "," + keyword3;
-//        System.out.println("***************************");
-//        System.out.println(title_text);
 
-//        title_text = convertToEmoji(title_text);
+        String mtitle = weather + "/" + mood + "/" + keyword1 + "/" + keyword2 + "/" + keyword3;
+        System.out.println("***************************");
+        System.out.println("mtitle : " + mtitle);
+        String title = convertToEmoji(mtitle);
+        System.out.println("***************************");
+
+//        String title = convertToEmoji(title_text);
 //        System.out.println(title_text);
 
 
@@ -391,7 +390,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
 
-    public String convertToEmoji(String text) {
+    public String convertToEmoji(String mtitle) {
 
         // 이모지 데이터처리
         openFile();
@@ -401,8 +400,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         int len = arr1.length;
         System.out.println("array" + Arrays.toString(arr1));    // 배열로 전체 출력
 
-        String[] title = text.split(",");
-        System.out.println("title array" + Arrays.toString(title));    // 배열로 전체 출력
+        String[] atitle = mtitle.split("/");
+        System.out.println("title array" + Arrays.toString(atitle));    // 배열로 전체 출력
 
 
         // 이모지와 텍스트 배열로 나누기
@@ -422,79 +421,36 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 odd++;
             }
         }
-        System.out.println("emoji array" + Arrays.toString(emojiarr));  // 이모지 배열 출력
-        System.out.println("text array " + Arrays.toString(textarr));   //텍스트 배열 출력
+//        System.out.println("emoji array" + Arrays.toString(emojiarr));
+//        System.out.println("text array " + Arrays.toString(textarr));
 
-        System.out.println("-----------------------");
-        System.out.println(text);
-
-        for(int i = 0; i < len/2; i++) {
-            if(text.equals(textarr[i])) {
-                text = emojiarr[i];
-            }
-        }
-        System.out.println(text);
-        return text;
+        // 입력받은 텍스트랑 textarr인덱스 비교, emojiarr로 바꾸기
+        // 여기 구현을 잘 못하겠어요 ㅠㅠ
+//        for(int i=0; i<atitle.length; i++) {
+//            for(int j = 0; j < len; j++) {
+//                if(atitle[j] == textarr[j]) {
+//                    atitle[j] = emojiarr[j];
+//                }
+//            }
+//            mtitle += (" "+ atitle[i]);
+//        }
+//
+//        System.out.println("-----------------------");
+//        System.out.println(Arrays.toString(atitle));
+//        System.out.println(mtitle);
+//
+//
+//        return mtitle;
 
     }
 
 
-    // 사용자에게 받은 텍스트를 이모지로 변환해주는 함수
-//    public String convertToEmoji(String text) {
-//
-//        // 이모지 데이터처리
-//        openFile();
-//        // 콤마 단위로 split해서 배열 만들기
-//        String stringsb = sb.toString();
-//        String[] arr1 = stringsb.split(",");
-//        int len = arr1.length;
-//        System.out.println("array" + Arrays.toString(arr1));    // 배열로 전체 출력
-//
-//        String[] title = text.split(",");
-//        System.out.println("title array" + Arrays.toString(title));    // 배열로 전체 출력
-//
-//
-//        // 이모지와 텍스트 배열로 나누기
-//        String[] emojiarr = new String[len/2];
-//        String[] textarr = new String[len/2];
-//
-//        int even = 0;
-//        int odd = 0;
-//        for (int i = 0; i < len; i++) {
-//            if (i % 2 == 0) {
-//                emojiarr[even] = arr1[i];
-////                System.out.println("emoji1: " + emojiarr[i/2]);
-//                even++;
-//            } else if (i % 2 != 0) {
-//                textarr[odd] = arr1[i];
-////                System.out.println("text: " + textarr[(i-1)/2]);
-//                odd++;
-//            }
+//    for(int i = 0; i < len/2; i++) {
+//        if(text.equals(textarr[i])) {
+//            text = emojiarr[i];
 //        }
-//        System.out.println("emoji array" + Arrays.toString(emojiarr));  // 이모지 배열 출력
-//        System.out.println("text array " + Arrays.toString(textarr));   //텍스트 배열 출력
-//
-//        System.out.println("-----------------------");
-//        System.out.println(text);
-//
-//        for(int i = 0; i < 5; i++) {
-//            for(int j = 0; j<textarr.length; j++) {
-//                if(title[i] == textarr[j]) {
-//                    title[i] = emojiarr[j];
-//                }
-//            }
-//
-//            text += (" " + title[i]);
-//            System.out.println("text1 "+ text);
-//
-//        }
-//
-////        text = title[0] + title[1] + title[2] + title[3] + title[5];
-////        System.out.println("text2: "+ text);
-//
-//        return text;
-//
 //    }
+
 
 
 }
