@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +40,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     private static final int RESULT_TITLE_SPEECH = 100;
     private static final int RESULT_DESCRIPTION_TEXT = 101;
-    private static ImageView image_view_detail_activity;
     private static EditText weather_text_view;
     private static EditText mood_text_view;
     private static EditText key1_text_view;
