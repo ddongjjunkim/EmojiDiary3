@@ -22,7 +22,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/notes_icon"
+            android:src="@drawable/vector_notes_icon"
             android:id="@+id/empty_image_view"
             />
         <TextView
