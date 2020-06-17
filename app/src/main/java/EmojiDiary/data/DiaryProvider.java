@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.util.Log;
 
 // ContentProvider.class: app과 db 사이에서 데이터 접근을 쉽게 하도록 관리해주는 클래스
-// 앱의 코드를 변경하지 않고 데이터 접근을 쉽게 함
-// Loader나 CursorAdapter 클래스 사용
 public class DiaryProvider extends ContentProvider {
 
     private DiaryDbHelper mDiaryHelper;
@@ -113,23 +111,11 @@ public class DiaryProvider extends ContentProvider {
         switch (match){
             case DIARY:
                 return insertNote(uri,values);
-//            case USER:
-//                return insertUserNote(uri,values);
             default:
                 throw new IllegalArgumentException("Cannot perform insert on unknown URI "+uri);
         }
 
     }
-
-//    private Uri insertUserNote(Uri uri, ContentValues values) {
-//
-//        SQLiteDatabase d = mUserDbHelper.getReadableDatabase();
-//        long id= d.insert(DiaryEntry.USER_TABLE_NAME,null, values);
-//        if(id != 0)
-//            getContext().getContentResolver().notifyChange(uri,null);
-//
-//        return ContentUris.withAppendedId(uri,id);
-//    }
 
     private Uri insertNote(Uri uri, ContentValues values) {
 

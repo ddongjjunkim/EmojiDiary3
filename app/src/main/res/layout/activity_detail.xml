@@ -24,47 +24,17 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="38dp"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingTop="@dimen/activity_horizontal_margin"
-                        android:text="Date :"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        android:textColor="@color/colorPrimary" />
-
-                    <Button
-                        android:id="@+id/date_selector"
-                        android:layout_width="36dp"
-                        android:layout_height="35dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_weight="0"
-                        android:background="@drawable/ic_date_range" />
-
-                    <TextView
-                        android:id="@+id/date_detail_activity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="38dp"
-                        android:layout_weight="1"
-                        android:paddingLeft="8dp"
-                        android:paddingTop="8dp"
-                        android:text="date"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="오늘의 기분을 다섯가지 키워드로 표현해주세요!" />
+                    android:background="#BFB8B8B8"
+                    android:gravity="center"
+                    android:text="👇Express your today in 5 keywords!👇"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,49 +45,120 @@
                     <EditText
                         android:id="@+id/weather_note"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:hint="날씨" />
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:hint="1"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/mood_note"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:hint="기분" />
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:hint="2"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/key_note_1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:hint="키워드1" />
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:hint="3"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/key_note_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:hint="키워드2" />
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:hint="4"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/key_note_3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:hint="키워드3" />
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:hint="5"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/title_note"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_horizontal_margin"
-                    android:text="Title: "
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/colorPrimary" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="129dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_horizontal_margin"
+                        android:text="Title: "
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="#FF6347" />
+
+                    <TextView
+                        android:id="@+id/title_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_horizontal_margin"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="65dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_horizontal_margin"
+                        android:text="Date :"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="#FF6347" />
+
+                    <Button
+                        android:id="@+id/date_selector"
+                        android:layout_width="44dp"
+                        android:layout_height="37dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_weight="0"
+                        android:background="@drawable/ic_date_range" />
+
+                    <TextView
+                        android:id="@+id/date_detail_activity"
+                        android:layout_width="257dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="20dp"
+                        android:text="date"
+                        android:textColor="@android:color/darker_gray" />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
@@ -133,7 +174,7 @@
                 android:paddingTop="@dimen/activity_horizontal_margin"
                 android:text="Description :"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="#FF6347" />
         </LinearLayout>
 
         <ScrollView

@@ -47,23 +47,6 @@
             android:authorities="com.diary.ishita.mydiary"
             android:exported="false" />
 
-<!--        <activity-->
-<!--            android:name=".ImageActivity"-->
-<!--            android:parentActivityName=".DetailActivity"-->
-<!--            android:theme="@style/AppTheme">-->
-<!--            <meta-data-->
-<!--                android:name=".ImageActivity"-->
-<!--                android:parentActivityName="android.support.PARENT_ACTIVITY"-->
-<!--                android:value=".DetailActivity" />-->
-<!--        </activity>-->
-
-<!--        <activity android:name=".UserImageActivity"-->
-<!--            android:parentActivityName=".MainActivity"-->
-<!--            android:theme="@style/AppTheme">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.PARENT_ACTIVITY"-->
-<!--                android:value=".MainActivity" />-->
-<!--        </activity>-->
 
     </application>
 

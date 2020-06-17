@@ -115,7 +115,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
-        //TEST!!!
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -245,7 +244,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     // 다이어리 저장 함수
-    //
     private void saveDiary(Uri saveUri) {
 
         ContentValues values = new ContentValues();
@@ -256,27 +254,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         String keyword2= key2_text_view.getText().toString();
         String keyword3= key3_text_view.getText().toString();
 
-//      String title = convertToEmoji(weather); //
-
-
-
         String mtitle = weather + "/" + mood + "/" + keyword1 + "/" + keyword2 + "/" + keyword3;
-        System.out.println("***************************");
-        System.out.println("mtitle : " + mtitle);
         String title = convertToEmoji(mtitle);
-        System.out.println("***************************");
-
-//        String title = convertToEmoji(title_text);
-//        System.out.println(title_text);
-
-
-//        weather = convertToEmoji(weather);
-//        mood = convertToEmoji(mood);
-//        keyword1 = convertToEmoji(keyword1);
-//        keyword2 = convertToEmoji(keyword2);
-//        keyword3 = convertToEmoji(keyword3);
-
-
         String date = date_text_view.getText().toString();
         String description = description_text_view.getText().toString();
 
@@ -416,19 +395,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         for (int i = 0; i < len; i++) {
             if (i % 2 == 0) {
                 emojiarr[even] = arr1[i];
-//                System.out.println("emoji1: " + emojiarr[i/2]);
                 even++;
             } else if (i % 2 != 0) {
                 textarr[odd] = arr1[i];
-//                System.out.println("text: " + textarr[(i-1)/2]);
                 odd++;
             }
         }
-//        System.out.println("emoji array" + Arrays.toString(emojiarr));
-//        System.out.println("text array " + Arrays.toString(textarr));
-//        System.out.println("atitle" + Arrays.toString(atitle));
-        // 입력받은 텍스트랑 textarr인덱스 비교, emojiarr로 바꾸기
-        // 여기 구현을 잘 못하겠어요 ㅠㅠ
+
         for(int i=0; i<atitle.length; i++) {
             for(int j = 0; j <textarr.length; j++) {
                 if(atitle[i].equals(textarr[j])) {
@@ -437,26 +410,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
             }
 
-            EmojiTitle += (atitle[i]);
+            EmojiTitle += (" " + atitle[i]);
         }
-
-
-        System.out.println("-----------------------");
-        System.out.println(Arrays.toString(atitle));
-        System.out.println(mtitle);
-
 
         return EmojiTitle;
 
     }
-
-
-//    for(int i = 0; i < len/2; i++) {
-//        if(text.equals(textarr[i])) {
-//            text = emojiarr[i];
-//        }
-//    }
-
 
 
 }
