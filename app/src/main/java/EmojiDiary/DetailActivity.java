@@ -427,7 +427,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 //        System.out.println("emoji array" + Arrays.toString(emojiarr));
 //        System.out.println("text array " + Arrays.toString(textarr));
 //        System.out.println("atitle" + Arrays.toString(atitle));
-       
+        // 입력받은 텍스트랑 textarr인덱스 비교, emojiarr로 바꾸기
+        // 여기 구현을 잘 못하겠어요 ㅠㅠ
         for(int i=0; i<atitle.length; i++) {
             for(int j = 0; j <textarr.length; j++) {
                 if(atitle[i].equals(textarr[j])) {
