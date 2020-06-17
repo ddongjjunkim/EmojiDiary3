@@ -23,6 +23,7 @@ public class DiaryCursorAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
     }
 
+    //s
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
