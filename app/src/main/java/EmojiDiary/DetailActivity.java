@@ -165,9 +165,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private void showUnsavedChangesDialog(
             DialogInterface.OnClickListener discardButtonClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("수정사항이 저장되지 않을 수 있습니다!");
-        builder.setPositiveButton("삭제", discardButtonClickListener);
-        builder.setNegativeButton("계속 작성", new DialogInterface.OnClickListener() {
+        builder.setMessage("Changes may not be saved!");
+        builder.setPositiveButton("Delete", discardButtonClickListener);
+        builder.setNegativeButton("Keep Editing", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (dialog != null) {
                     dialog.dismiss();
@@ -204,15 +204,15 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     // 다이어리 삭제 및 취소 메시지, 처리
     private void showDeleteConfirmationDialog(){
         AlertDialog.Builder builder= new  AlertDialog.Builder(this);
-        builder.setMessage("삭제하시겠습니까?");
-        builder.setPositiveButton("삭제", new DialogInterface.OnClickListener(){
+        builder.setMessage("Are you sure you want to delete?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteDiary();
             }
         });
 
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener(){
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(dialog!=null){
@@ -289,17 +289,17 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         if(saveUri.equals(DiaryContract.DiaryEntry.CONTENT_URI)){
             Uri uri =getContentResolver().insert(DiaryContract.DiaryEntry.CONTENT_URI,values);
             if(uri!=null)
-                message="일기가 저장되었습니다!";
+                message="Diary Saved!";
             else
-                message="일기 저장 실패";
+                message="Failure to save diary";
         }
         else{
 
             int rows= getContentResolver().update(CURRENT_DIARY_URI,values,null,null);
             if(rows!=0)
-                message="일기가 수정되었습니다!";
+                message="Diary Edited!";
             else
-                message="일기 수정 실패";
+                message="Failure to edit diary";
         }
         toast= Toast.makeText(this,message,Toast.LENGTH_SHORT);
         toast.show();
@@ -316,10 +316,10 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             Toast toast;
             String message;
             if(rows != 0){
-                message="일기가 삭제되었습니다";
+                message="Diary Deleted";
             }
             else
-                message="일기를 삭제할 수 없습니다";
+                message="Failure to delete diary";
             toast= Toast.makeText(this,message,Toast.LENGTH_SHORT);
             toast.show();
             finish();

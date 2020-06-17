@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(has_diary)
             deleteConfirmationDialog();
             else{
-                Toast toast= Toast.makeText(this,"작성된 일기가 없습니다",Toast.LENGTH_SHORT);
+                Toast toast= Toast.makeText(this,"No entries to delete!",Toast.LENGTH_SHORT);
                 toast.show();
             }
             return true;
@@ -147,14 +147,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //모두 삭제 버튼 눌렀을 경우 확인메세지 다이얼로그로 띄우기
     private void deleteConfirmationDialog(){
         AlertDialog.Builder builder= new  AlertDialog.Builder(this);
-        builder.setMessage("모든 일기를 삭제하시겠습니까?");
-        builder.setPositiveButton("삭제", new DialogInterface.OnClickListener(){
+        builder.setMessage("Delete all diaries?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 getContentResolver().delete(DiaryContract.DiaryEntry.CONTENT_URI,null,null);
             }
         });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener(){
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

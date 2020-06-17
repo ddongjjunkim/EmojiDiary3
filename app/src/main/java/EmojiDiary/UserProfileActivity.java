@@ -29,7 +29,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        setTitle("프로필 만들기");
+        setTitle("My Profile");
 
         user_name=(EditText)findViewById(R.id.user_name_edit_text_view);
         user_email=(EditText)findViewById(R.id.user_email_edit_text_view);
