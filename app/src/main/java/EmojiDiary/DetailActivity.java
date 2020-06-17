@@ -71,7 +71,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
 
         title_text_view=(TextView) findViewById(R.id.title_note);
-        weather_text_view=(EditText) findViewById(R.id.weather_note);
+        weather_text_view=(EditText) findViewById(R.id.key_note_3);
         mood_text_view=(EditText) findViewById(R.id.mood_note);
         key1_text_view=(EditText) findViewById(R.id.key_note_1);
         key2_text_view=(EditText) findViewById(R.id.key_note_2);
@@ -245,7 +245,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     // 다이어리 저장 함수
+    //
     private void saveDiary(Uri saveUri) {
+
         ContentValues values = new ContentValues();
 
         String weather = weather_text_view.getText().toString();
@@ -254,7 +256,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         String keyword2= key2_text_view.getText().toString();
         String keyword3= key3_text_view.getText().toString();
 
-//      String title = convertToEmoji(weather);
+//      String title = convertToEmoji(weather); //
 
 
 
@@ -350,7 +352,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
 
     }
-
+//
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }

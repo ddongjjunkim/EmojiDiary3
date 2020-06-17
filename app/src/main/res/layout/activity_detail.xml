@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.diary.ishita.mydiary.com.diary.mydiary.DetailActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="150dp"
+            android:layout_height="251dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -26,10 +26,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="38dp"
                     android:layout_weight="1"
-                    android:paddingTop="8dp"
                     android:text="Date :"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="@color/colorPrimary" />
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/colorPrimary"/>
 
                 <Button
                     android:id="@+id/date_selector"
@@ -50,62 +51,65 @@
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="오늘의 기분을 다섯가지 키워드로 표현해주세요!" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Weather:" />
 
                 <EditText
                     android:id="@+id/weather_note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Mood:" />
+                    android:hint="날씨" />
 
                 <EditText
                     android:id="@+id/mood_note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Keyword1:" />
+                    android:hint="기분" />
 
                 <EditText
                     android:id="@+id/key_note_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:hint="키워드1" />
+
+                <EditText
+                    android:id="@+id/key_note_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="키워드2" />
+
+                <EditText
+                    android:id="@+id/key_note_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="키워드3" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/title_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin"
+                android:text="Title: "
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
     </LinearLayout>
