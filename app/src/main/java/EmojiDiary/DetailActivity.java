@@ -371,7 +371,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
         // 텍스트 파일 읽어서 buffer에 저장
         try {
-            InputStream in = this.getResources().openRawResource(R.raw.emoji_data_1);
+            InputStream in = this.getResources().openRawResource(R.raw.emoji_data);
             BufferedReader buffer = null;
             if (in != null) {
                 InputStreamReader stream = new InputStreamReader(in, "utf-8");
