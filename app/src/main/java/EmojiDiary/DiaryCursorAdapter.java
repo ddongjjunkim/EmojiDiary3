@@ -41,3 +41,4 @@ public class DiaryCursorAdapter extends CursorAdapter {
         }
     }
 }
+///
