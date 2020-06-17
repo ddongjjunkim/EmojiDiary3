@@ -71,7 +71,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
 
         title_text_view=(TextView) findViewById(R.id.title_note);
-        weather_text_view=(EditText) findViewById(R.id.key_note_3);
+        weather_text_view=(EditText) findViewById(R.id.weather_note);
         mood_text_view=(EditText) findViewById(R.id.mood_note);
         key1_text_view=(EditText) findViewById(R.id.key_note_1);
         key2_text_view=(EditText) findViewById(R.id.key_note_2);
@@ -409,6 +409,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         // 이모지와 텍스트 배열로 나누기
         String[] emojiarr = new String[len/2];
         String[] textarr = new String[len/2];
+        String EmojiTitle = "";
 
         int even = 0;
         int odd = 0;
@@ -425,24 +426,27 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
 //        System.out.println("emoji array" + Arrays.toString(emojiarr));
 //        System.out.println("text array " + Arrays.toString(textarr));
-
+//        System.out.println("atitle" + Arrays.toString(atitle));
         // 입력받은 텍스트랑 textarr인덱스 비교, emojiarr로 바꾸기
         // 여기 구현을 잘 못하겠어요 ㅠㅠ
-//        for(int i=0; i<atitle.length; i++) {
-//            for(int j = 0; j < len; j++) {
-//                if(atitle[j] == textarr[j]) {
-//                    atitle[j] = emojiarr[j];
-//                }
-//            }
-//            mtitle += (" "+ atitle[i]);
-//        }
-//
-//        System.out.println("-----------------------");
-//        System.out.println(Arrays.toString(atitle));
-//        System.out.println(mtitle);
-//
-//
-//        return mtitle;
+        for(int i=0; i<atitle.length; i++) {
+            for(int j = 0; j <textarr.length; j++) {
+                if(atitle[i].equals(textarr[j])) {
+                    atitle[i] = emojiarr[j];
+                }
+                
+            }
+
+            EmojiTitle += (atitle[i]);
+        }
+
+
+        System.out.println("-----------------------");
+        System.out.println(Arrays.toString(atitle));
+        System.out.println(mtitle);
+
+
+        return EmojiTitle;
 
     }
 
