@@ -434,7 +434,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 if(atitle[i].equals(textarr[j])) {
                     atitle[i] = emojiarr[j];
                 }
-                
+
             }
 
             EmojiTitle += (atitle[i]);
