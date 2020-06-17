@@ -246,6 +246,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     // 다이어리 저장 함수
     private void saveDiary(Uri saveUri) {
+
         ContentValues values = new ContentValues();
 
         String weather = weather_text_view.getText().toString();
