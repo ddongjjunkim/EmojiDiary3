@@ -254,7 +254,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         String keyword2= key2_text_view.getText().toString();
         String keyword3= key3_text_view.getText().toString();
 
-//      String title = convertToEmoji(weather);
+//      String title = convertToEmoji(weather); //
 
 
 
