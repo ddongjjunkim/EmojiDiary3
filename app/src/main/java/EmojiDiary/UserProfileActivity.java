@@ -95,12 +95,10 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         ContentValues values = new ContentValues();
         String name = user_name.getText().toString();
         String email = user_email.getText().toString();
-//        String notes = user_note.getText().toString();
 
         //2. put()로 항목, 값을 DB테이블 순서에 맞게 집어넣음.
         values.put(DiaryContract.DiaryEntry.USER_COLUMN_NAME,name);
         values.put(DiaryContract.DiaryEntry.USER_COLUMN_EMAIL,email);
-//        values.put(DiaryEntry.USER_COLUMN_NOTES,notes);
         Toast toast;
         String message = null;
 
