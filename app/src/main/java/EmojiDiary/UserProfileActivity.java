@@ -107,13 +107,13 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
             Uri uri = getContentResolver().insert(DiaryContract.DiaryEntry.USER_CONTENT_URI, values);
             if(uri != null)
                 has_saved = true;
-            message = "프로필이 저장되었습니다!";
+            message = "Profile saved!";
         }
         // 기존 프로필 업데이트 시, DB 업데이트 후 업데이트 메세지
         else{
             int rows = getContentResolver().update(DiaryContract.DiaryEntry.USER_CONTENT_URI, values,null,null);
             if(rows != 0)
-                message="프로필이 업데이트되었습니다!";
+                message="Profile updated!";
         }
               toast= Toast.makeText(this,message,Toast.LENGTH_SHORT);
         toast.show();

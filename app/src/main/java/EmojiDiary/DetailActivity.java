@@ -401,7 +401,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 odd++;
             }
         }
-
+        //사용자가 입력한 텍스트를 이모지로 변환
         for(int i=0; i<atitle.length; i++) {
             for(int j = 0; j <textarr.length; j++) {
                 if(atitle[i].equals(textarr[j])) {
